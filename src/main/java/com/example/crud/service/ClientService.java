@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +24,9 @@ public class ClientService {
 	private ClientRepository repository;
 
 	@Transactional(readOnly = true)
-	public List<ClientDTO> findAll() {
-		List<Client> list = repository.findAll();
-		return list.stream().map(x -> new ClientDTO(x)).collect(Collectors.toList());
+	public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Client> list = repository.findAll(pageRequest);
+		return list.map(x -> new ClientDTO(x));
 	}
 
 	@Transactional(readOnly = true)
@@ -58,6 +60,9 @@ public class ClientService {
 		repository.deleteById(id);
 	}
 
+	
+	
+	
 	private void transferAttributes(Client entity, ClientDTO dto) {
 		entity.setName(dto.getName());
 		entity.setCpf(dto.getCpf());
@@ -65,5 +70,4 @@ public class ClientService {
 		entity.setBirthDate(dto.getBirthDate());
 		entity.setChildren(dto.getChildren());
 	}
-
 }

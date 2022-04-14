@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import com.example.crud.entities.Client;
 
 public class ClientDTO implements Serializable {
