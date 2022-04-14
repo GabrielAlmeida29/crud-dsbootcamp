@@ -44,14 +44,18 @@ public class ClientService {
 
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO dto) {
-		try { 
+		try {
 			Client entity = repository.getById(id);
 			transferAttributes(entity, dto);
 			entity = repository.save(entity);
 			return new ClientDTO(entity);
-		} catch(EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("ID Not Found! ID: " + id);
 		}
+	}
+
+	public void delete(Long id) {
+		repository.deleteById(id);
 	}
 
 	private void transferAttributes(Client entity, ClientDTO dto) {
